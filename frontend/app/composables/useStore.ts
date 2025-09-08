@@ -1,8 +1,4 @@
-interface IStore {
-	email: string | null;
-	isValidateEmail: boolean;
-	username: string | null;
-}
+import type { IStore } from "~/types/store";
 
 export default function () {
 	return useState<IStore>('base-store', () => {
@@ -10,6 +6,11 @@ export default function () {
 			email: null,
 			isValidateEmail: false,
 			username: null,
-		};
+			name: null,
+			phone: null,
+			birthdate: null,
+			weight: null,
+			height: null,
+		}
 	});
 }

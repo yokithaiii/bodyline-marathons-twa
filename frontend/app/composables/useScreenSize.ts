@@ -27,8 +27,5 @@ export default function () {
 		window.removeEventListener('resize', browserResized);
 	});
 
-	// return {
-	// 	...toRefs(sizes),
-	// };
 	return sizes;
 }

@@ -23,7 +23,7 @@ function openSlideover() {
 		<div class="l-wrapper">
 			<div class="flex items-center justify-between gap-4 py-4">
 				<nuxt-link to="/">
-					<span>Поддержка Bodyline 💪</span>
+					<span>Марафоны - Bodyline 💪</span>
 				</nuxt-link>
 
 				<div class="flex items-center gap-1">

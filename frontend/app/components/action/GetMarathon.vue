@@ -1,31 +1,41 @@
 <script setup lang="ts">
 interface IListMarathon {
-	coach: {
-		firstname: string;
+	buy_link: string;
+	is_new_user: boolean;
+	have_workout: boolean;
+	have_subscription: boolean;
+	user: {
 		id: string;
+		firstname: string;
 		lastname: string;
+		avatar_url: string;
 	};
-	id: string;
-	price: number;
-	title: string;
+	workout: {
+		id: string;
+		title: string;
+		price: number;
+		description: string;
+	}
 }
+
+const drawerContent = useDrawer();
 
 const states = reactive({
 	text: '',
 	loading: false,
 	errorText: null as null | string,
-	data: null as null | IListMarathon[],
+	data: null as null | IListMarathon,
 });
 
 const getData = async () => {
 	states.loading = true;
 	try {
-		const res = await $fetch.raw<IListMarathon[]>(useApi() + `/get-workouts`);
+		const res = await $fetch.raw<IListMarathon>(useApi() + `/check-user?email=` + useStore().value.email);
 
 		if (res.status === 200 && res._data) {
 			states.data = res._data;
 		}
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+
 	} catch (err: any) {
 		states.errorText = null;
 		console.error(err);
@@ -44,39 +54,21 @@ const handleRefreshPage = () => {
 	getData();
 };
 
-const openMarathon = async (item: IListMarathon) => {
-	states.loading = true;
-	try {
-		const res = await $fetch.raw<{ message: string }>(useApi() + '/unlock-workout', {
-			method: 'POST',
-			body: {
-				email: useStore().value.email,
-				workout_id: item.id,
-			},
-		});
-		if (res.status === 200 && res._data) {
-			useDrawer().value.isOpen = false;
-			useToast().add({
-				title: '✅' + (res._data.message || 'Успешно!'),
-				close: false,
-			});
-		}
-	} catch (err: unknown) {
-		console.error(err);
-		const errText = err as { data: { error: string } };
-		useToast().add({
-			title: errText.data.error.startsWith('Марафон уже открыт') ? '✅ Марафон уже открыт' : `❌ ${errText.data.error}`,
-			close: false,
-		});
-	} finally {
-		states.loading = false;
-	}
+const openCardDetail = (state: string) => {
+	drawerContent.value.state = state;
+	drawerContent.value.isOpen = true;
 };
+
 </script>
 
 <template>
 	<div>
-		<span class="text-2xl">Доступ к марафону 🏆</span>
+		 <span v-if="states.data && states.data.is_new_user === false" class="text-2xl">
+			{{ states.data.user?.firstname }} 🏆
+		</span>
+		<span v-else>
+			Анкетирование нового пользователя 🏆
+		</span>
 
 		<base-page
 			class="mt-2"
@@ -85,11 +77,33 @@ const openMarathon = async (item: IListMarathon) => {
 			:show-error-btn="true"
 			@refresh="handleRefreshPage"
 		>
-			<ul class="grid grid-cols-1 gap-2">
-				<li v-for="item in states.data" :key="item.id">
-					<UButton class="block w-full h-full" @click="openMarathon(item)">{{ item.title }}</UButton>
-				</li>
-			</ul>
+			<div v-if="states.data">
+				<div v-if="states.data.is_new_user === false">
+					<h2> 
+						У вас есть аккаунт💪🏽 
+						<br>
+						Ссылка на оплату
+					</h2> 
+				</div>
+
+				<div v-else>
+					<h2> 
+						Надо пройти небольшое анкетирование для Вашего результата💪🏽 
+						<br>
+						Пожалуйста, заполняйте данные корректно!
+					</h2>
+					<br>
+					<UButton size="lg" @click="openCardDetail('register')">
+						<span class="text-[14px] line-clamp-1">Пройти анкетирование</span>
+					</UButton>
+				</div>
+
+			</div>
+
+			<div v-else>
+				Данные не найдены
+			</div>
+			
 		</base-page>
 	</div>
 </template>

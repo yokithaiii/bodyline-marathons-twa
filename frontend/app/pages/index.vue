@@ -1,8 +1,14 @@
 <script setup lang="ts">
-import { useWebAppCloudStorage, useWebApp } from 'vue-tg';
+import { useWebApp } from 'vue-tg';
 import { BodyModalEmail } from '#components';
+import type { IMarathon } from '~/types/marathon';
 
-const cloudStorage = useWebAppCloudStorage();
+const states = reactive({
+	text: '',
+	loading: false,
+	errorText: null as null | string,
+	data: null as null | IMarathon,
+});
 
 const tma = useWebApp();
 const store = useStore();
@@ -16,20 +22,27 @@ const openModalEmail = () => {
 	});
 };
 
-const getEmail = async () => {
+const getMarathon = async () => {
+	states.loading = true;
 	try {
-		const res = await cloudStorage.getStorageItem('user_email');
-		if (res) {
-			store.value.email = res;
+		const res = await $fetch.raw<IMarathon>(useApi() + `/get-marathon`);
+
+		if (res.status === 200 && res._data) {
+			states.data = res._data;
 		}
-	} catch (err) {
+
+	} catch (err: any) {
+		states.errorText = null;
 		console.error(err);
+		states.errorText = err.data.error || 'Что - то пошло не так, попробуйте еще';
+	} finally {
+		states.loading = false;
 	}
 };
 
 onMounted(() => {
 	store.value.username = tma.initDataUnsafe.user?.username;
-	getEmail();
+	getMarathon();
 });
 </script>
 
@@ -39,14 +52,16 @@ onMounted(() => {
 			<div class="l-wrapper">
 				<div class="py-4">
 					<h1 class="text-2xl">
-						Здравствуйте
+						Привет,
 						<span v-if="tma.initDataUnsafe">
-							{{ tma.initDataUnsafe?.user?.username }}
+							{{ tma.initDataUnsafe?.user?.username ?? 'незнакомец' }}
 						</span>
-
 						<span class="text-emerald-400">!</span>
 						<br />
-						Чем мы можем вам помочь<span class="text-emerald-400">?</span>
+						<span>
+							Вы на странице покупки марафона - 
+						</span>
+						<span class="text-emerald-400">{{ states.data?.title }}</span>
 					</h1>
 
 					<div v-if="store.email" class="mt-2">
@@ -67,21 +82,15 @@ onMounted(() => {
 		<UDrawer v-model:open="drawerContent.isOpen">
 			<template #content>
 				<article class="my-4 px-2 h-screen overflow-y-auto">
-					<template v-if="drawerContent.state === 'access'">
-						<action-get-access />
-					</template>
-
-					<template v-else-if="drawerContent.state === 'marathon'">
+				
+					<template v-if="drawerContent.state === 'marathon'">
 						<action-get-marathon />
 					</template>
 
-					<template v-else-if="drawerContent.state === 'qa'">
-						<action-get-faq />
+					<template v-if="drawerContent.state === 'register'">
+						<action-register-user />
 					</template>
 
-					<template v-else-if="drawerContent.state === 'ask'">
-						<action-request-question />
-					</template>
 				</article>
 			</template>
 		</UDrawer>

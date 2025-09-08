@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { useWebAppCloudStorage } from 'vue-tg';
 
-const cloudStorage = useWebAppCloudStorage();
 const modal = useModal();
 const store = useStore();
 const drawerContent = useDrawer();
@@ -25,13 +23,7 @@ const isNotValidEmail = computed(() => {
 });
 
 async function setEmailUser(val: string) {
-	try {
-		await cloudStorage.setStorageItem('user_email', val);
-	} catch (err) {
-		console.error(err);
-	} finally {
-		store.value.email = val;
-	}
+	store.value.email = val;
 }
 
 const handleEmail = async () => {
