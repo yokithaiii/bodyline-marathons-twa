@@ -74,12 +74,13 @@ async function saveUserData() {
 const registerUser = async (item: IUser) => {
 	states.loading = true;
 	try {
+		let clearPhone = item.phone?.replace(/\D/g, '') ?? null;
 		const res = await $fetch.raw<{ message: string }>(useApi() + '/register-user', {
 			method: 'POST',
 			body: {
 				email: item.email,
 				firstname: item.name,
-				phone: item.phone,
+				phone: clearPhone,
 				birthdate: item.birthdate,
 				weight: item.weight,
 				height: item.height,
@@ -169,11 +170,54 @@ function validateData(): boolean {
 function clearError() {
 	states.errorText = null;
 }
+
+function formatPhone(event: Event) {
+  const input = event.target as HTMLInputElement;
+  let value = input.value.replace(/\D/g, '');
+  
+  if (value.length > 0) {
+    value = value.replace(/^(\d{1,1})?(\d{1,3})?(\d{0,3})?(\d{0,2})?(\d{0,2})?/, (match, p1, p2, p3, p4, p5) => {
+      let result = '';
+      if (p1) result += p1;
+      if (p2) result += ' ' + p2;
+      if (p3) result += ' ' + p3;
+      if (p4) result += ' ' + p4;
+      if (p5) result += ' ' + p5;
+      return result;
+    }).trim();
+  }
+  
+  input.value = value;
+  states.userData.phone = value;
+  clearError();
+}
+
+function formatBirthdate(event: Event) {
+  const input = event.target as HTMLInputElement;
+  let value = input.value.replace(/\D/g, '');
+  
+  if (value.length > 0) {
+    value = value.replace(/^(\d{0,2})?(\d{0,2})?(\d{0,4})?/, (match, p1, p2, p3) => {
+      let result = '';
+      if (p1) result += p1;
+      if (p2) result += '.' + p2;
+      if (p3) result += '.' + p3;
+      return result;
+    });
+  }
+  
+  // Удаляем лишние точки в начале
+  value = value.replace(/^\.+|\.+$/g, '');
+  
+  input.value = value;
+  states.userData.birthdate = value;
+  clearError();
+}
 </script>
 
 <template>
 	<div>
-		<h1>Заполните все данные</h1>
+		<h1>Пожалуйста, заполняйте данные корректно!</h1>
 		<base-page class="mt-2" :loading="states.loading" :error-text="states.errorText" :show-error-btn="true"
 			@refresh="handleRefreshPage">
 			<section class="l-buttons gap-1 mt-4">
@@ -186,14 +230,20 @@ function clearError() {
 
 				<label for="phone-input" class="l-label flex">
 					<span>Номер телефона</span>
-					<input type="tel" id="phone-input" placeholder="89676243733" v-model="states.userData.phone"
-						@input="clearError">
+					<input type="tel" id="phone-input" placeholder="8 967 624 3733" 
+						:value="states.userData.phone"
+						@input="formatPhone"
+						maxlength="15"
+					>
 				</label>
 
 				<label for="birthdate-input" class="l-label flex">
 					<span>Дата рождения</span>
-					<input type="text" id="birthdate-input" placeholder="01.01.1999" v-model="states.userData.birthdate"
-						@input="clearError">
+					<input type="text" id="birthdate-input" placeholder="01.01.1999" 
+						:value="states.userData.birthdate"
+						@input="formatBirthdate"
+						maxlength="10"
+					>
 				</label>
 
 				<label for="weight-input" class="l-label flex">
