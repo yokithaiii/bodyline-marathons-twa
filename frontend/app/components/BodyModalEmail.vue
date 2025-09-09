@@ -46,13 +46,10 @@ const handleAcceptChange = () => {
 </script>
 
 <template>
-	<UModal
-		:title="props.title"
-		:close="{
-			color: 'neutral',
-			variant: 'solid',
-		}"
-	>
+	<UModal :title="props.title" :close="{
+		color: 'neutral',
+		variant: 'solid',
+	}">
 		<template #body>
 			<article>
 				<header>
@@ -76,10 +73,12 @@ const handleAcceptChange = () => {
 							Некорректный email
 						</span>
 
-						<UButton v-if="props.state === 'email'" class="mt-4 block" :disabled="isNotValidEmail" @click="handleAcceptChange">
+						<UButton v-if="props.state === 'email'" class="mt-4 block" :disabled="isNotValidEmail"
+							@click="handleAcceptChange">
 							Принять
 						</UButton>
-						<UButton v-else class="mt-4 block" :disabled="isNotValidEmail" @click="handleEmail">Поиск</UButton>
+						<UButton v-else class="mt-4 block" :disabled="isNotValidEmail" @click="handleEmail">Поиск
+						</UButton>
 					</template>
 				</main>
 			</article>

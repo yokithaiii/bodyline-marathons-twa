@@ -5,7 +5,7 @@ const states = reactive({
 	loading: false,
 	errorText: null as null | string,
 	userData: {
-		email : '',
+		email: '',
 		name: '',
 		phone: '',
 		birthdate: '',
@@ -89,7 +89,7 @@ const registerUser = async (item: IUser) => {
 
 		if (res.status === 200 && res._data) {
 			useDrawer().value.isOpen = false;
-			
+
 			useToast().add({
 				title: '✅ Данные успешно сохранены!',
 				close: false,
@@ -172,46 +172,46 @@ function clearError() {
 }
 
 function formatPhone(event: Event) {
-  const input = event.target as HTMLInputElement;
-  let value = input.value.replace(/\D/g, '');
-  
-  if (value.length > 0) {
-    value = value.replace(/^(\d{1,1})?(\d{1,3})?(\d{0,3})?(\d{0,2})?(\d{0,2})?/, (match, p1, p2, p3, p4, p5) => {
-      let result = '';
-      if (p1) result += p1;
-      if (p2) result += ' ' + p2;
-      if (p3) result += ' ' + p3;
-      if (p4) result += ' ' + p4;
-      if (p5) result += ' ' + p5;
-      return result;
-    }).trim();
-  }
-  
-  input.value = value;
-  states.userData.phone = value;
-  clearError();
+	const input = event.target as HTMLInputElement;
+	let value = input.value.replace(/\D/g, '');
+
+	if (value.length > 0) {
+		value = value.replace(/^(\d{1,1})?(\d{1,3})?(\d{0,3})?(\d{0,2})?(\d{0,2})?/, (match, p1, p2, p3, p4, p5) => {
+			let result = '';
+			if (p1) result += p1;
+			if (p2) result += ' ' + p2;
+			if (p3) result += ' ' + p3;
+			if (p4) result += ' ' + p4;
+			if (p5) result += ' ' + p5;
+			return result;
+		}).trim();
+	}
+
+	input.value = value;
+	states.userData.phone = value;
+	clearError();
 }
 
 function formatBirthdate(event: Event) {
-  const input = event.target as HTMLInputElement;
-  let value = input.value.replace(/\D/g, '');
-  
-  if (value.length > 0) {
-    value = value.replace(/^(\d{0,2})?(\d{0,2})?(\d{0,4})?/, (match, p1, p2, p3) => {
-      let result = '';
-      if (p1) result += p1;
-      if (p2) result += '.' + p2;
-      if (p3) result += '.' + p3;
-      return result;
-    });
-  }
-  
-  // Удаляем лишние точки в начале
-  value = value.replace(/^\.+|\.+$/g, '');
-  
-  input.value = value;
-  states.userData.birthdate = value;
-  clearError();
+	const input = event.target as HTMLInputElement;
+	let value = input.value.replace(/\D/g, '');
+
+	if (value.length > 0) {
+		value = value.replace(/^(\d{0,2})?(\d{0,2})?(\d{0,4})?/, (match, p1, p2, p3) => {
+			let result = '';
+			if (p1) result += p1;
+			if (p2) result += '.' + p2;
+			if (p3) result += '.' + p3;
+			return result;
+		});
+	}
+
+	// Удаляем лишние точки в начале
+	value = value.replace(/^\.+|\.+$/g, '');
+
+	input.value = value;
+	states.userData.birthdate = value;
+	clearError();
 }
 </script>
 
@@ -230,20 +230,14 @@ function formatBirthdate(event: Event) {
 
 				<label for="phone-input" class="l-label flex">
 					<span>Номер телефона</span>
-					<input type="tel" id="phone-input" placeholder="8 967 624 3733" 
-						:value="states.userData.phone"
-						@input="formatPhone"
-						maxlength="15"
-					>
+					<input type="tel" id="phone-input" placeholder="8 967 624 3733" :value="states.userData.phone"
+						@input="formatPhone" maxlength="15">
 				</label>
 
 				<label for="birthdate-input" class="l-label flex">
 					<span>Дата рождения</span>
-					<input type="text" id="birthdate-input" placeholder="01.01.1999" 
-						:value="states.userData.birthdate"
-						@input="formatBirthdate"
-						maxlength="10"
-					>
+					<input type="text" id="birthdate-input" placeholder="01.01.1999" :value="states.userData.birthdate"
+						@input="formatBirthdate" maxlength="10">
 				</label>
 
 				<label for="weight-input" class="l-label flex">

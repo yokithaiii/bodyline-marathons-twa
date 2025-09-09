@@ -25,6 +25,7 @@ const states = reactive({
 	loading: false,
 	errorText: null as null | string,
 	data: null as null | IListMarathon,
+	showPayment: false,
 });
 
 const getData = async () => {
@@ -55,8 +56,14 @@ const handleRefreshPage = () => {
 };
 
 const openCardDetail = (state: string) => {
-	drawerContent.value.state = state;
-	drawerContent.value.isOpen = true;
+	if (state === 'pay' && states.data?.buy_link) {
+		drawerContent.value.state = state;
+		drawerContent.value.paymentUrl = states.data.buy_link;
+		drawerContent.value.isOpen = true;
+	} else {
+		drawerContent.value.state = state;
+		drawerContent.value.isOpen = true;
+	}
 };
 
 </script>
@@ -64,40 +71,31 @@ const openCardDetail = (state: string) => {
 <template>
 	<div>
 		<span v-if="states.data && states.data.is_new_user === false" class="text-xl">
-			 
+
 		</span>
 		<span v-else class="text-xl">
-			
+
 		</span>
 
-		<base-page
-			class="mt-2"
-			:loading="states.loading"
-			:error-text="states.errorText"
-			:show-error-btn="true"
-			@refresh="handleRefreshPage"
-		>
+		<base-page class="mt-2" :loading="states.loading" :error-text="states.errorText" :show-error-btn="true"
+			@refresh="handleRefreshPage">
 			<div v-if="states.data">
 				<div v-if="states.data.is_new_user === false">
 					<UCard variant="subtle" class="mt-[20px] text-white">
 						<template #header>
-							<h2> 
-								У вас есть аккаунт в приложении💪🏽 
-							</h2> 
+							<h2>
+								У вас есть аккаунт в приложении💪🏽
+							</h2>
 						</template>
 
 						<div class="flex items-center gap-[10px]">
 							<UAvatar :src="states.data.user.avatar_url" size="xl" />
-							<span>{{ states.data.user?.firstname +  ' ' + states.data.user?.lastname }} 🏆</span>
+							<span>{{ states.data.user?.firstname + ' ' + states.data.user?.lastname }} 🏆</span>
 						</div>
-						
+
 						<template #footer>
-							<UButton>
-								<a :href="states.data.buy_link" target="_blank">
-									<span class="text-[14px] line-clamp-1">
-										Оплатить
-									</span>
-								</a>
+							<UButton @click="openCardDetail('pay')">
+								<span class="text-[14px] line-clamp-1">Оплатить</span>
 							</UButton>
 						</template>
 					</UCard>
@@ -107,7 +105,7 @@ const openCardDetail = (state: string) => {
 					<h2>
 						Упс! Мы заметили что у Вас нет аккаунта.
 						<br>
-						Надо пройти небольшое анкетирование для Вашего результата💪🏽 
+						Надо пройти небольшое анкетирование для Вашего результата💪🏽
 					</h2>
 					<br>
 					<UButton @click="openCardDetail('register')">
@@ -120,7 +118,7 @@ const openCardDetail = (state: string) => {
 			<div v-else>
 				Данные не найдены
 			</div>
-			
+
 		</base-page>
 	</div>
 </template>

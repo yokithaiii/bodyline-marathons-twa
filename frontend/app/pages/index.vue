@@ -56,7 +56,7 @@ onMounted(() => {
 						Привет
 						<span class="text-emerald-400">!</span>
 					</h1>
-					
+
 					<h2 class="text-lg text-white">
 						Вы на странице покупки марафона -
 						<br>
@@ -91,8 +91,8 @@ onMounted(() => {
 						<action-register-user />
 					</template>
 
-					<template v-if="drawerContent.state === 'marathonList'">
-						<action-marathons-list />
+					<template v-if="drawerContent.state === 'pay'">
+						<action-payment-page />
 					</template>
 
 				</article>
