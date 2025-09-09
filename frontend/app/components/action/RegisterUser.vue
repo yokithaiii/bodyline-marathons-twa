@@ -217,10 +217,10 @@ function formatBirthdate(event: Event) {
 
 <template>
 	<div>
-		<h1>Пожалуйста, заполняйте данные корректно!</h1>
+		<h1 class="text-white">Пожалуйста, заполняйте данные корректно!</h1>
 		<base-page class="mt-2" :loading="states.loading" :error-text="states.errorText" :show-error-btn="true"
 			@refresh="handleRefreshPage">
-			<section class="l-buttons gap-1 mt-4">
+			<section class="l-buttons gap-1 mt-4 text-white py-4">
 
 				<label for="name-input" class="l-label flex">
 					<span>Имя</span>
@@ -260,7 +260,7 @@ function formatBirthdate(event: Event) {
 
 				<label class="l-label flex">
 					<UButton size="lg" @click="saveUserData" :loading="states.loading" :disabled="states.loading">
-						<span class="text-[16px] line-clamp-1">
+						<span class="line-clamp-1">
 							{{ states.loading ? 'Сохранение...' : 'Сохранить данные' }}
 						</span>
 					</UButton>

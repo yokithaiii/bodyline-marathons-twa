@@ -19,11 +19,11 @@ function openSlideover() {
 </script>
 
 <template>
-	<header class="relative rounded-[8px] z-10 bg-emerald-100 dark:bg-zinc-800 mt-1">
+	<header class="relative rounded-[8px] z-10 bg-emerald-100 dark:bg-zinc-950 mt-2">
 		<div class="l-wrapper">
 			<div class="flex items-center justify-between gap-4 py-4">
-				<nuxt-link to="/">
-					<span>Марафоны - Bodyline 💪</span>
+				<nuxt-link to="/" class="flex items-center gap-[10px]">
+					<span class="text-xl mt-[5px] text-white">BODYLINE MARATHONS</span>
 				</nuxt-link>
 
 				<div class="flex items-center gap-1">

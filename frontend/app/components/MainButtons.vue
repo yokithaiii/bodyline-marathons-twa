@@ -23,6 +23,11 @@ const actionButtons = [
 		title: 'Купить марафон 🏆',
 		state: 'marathon',
 	},
+	// {
+	// 	id: 2,
+	// 	title: 'Список марафонов',
+	// 	state: 'marathonList',
+	// }
 ];
 </script>
 

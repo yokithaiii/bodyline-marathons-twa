@@ -63,11 +63,11 @@ const openCardDetail = (state: string) => {
 
 <template>
 	<div>
-		 <span v-if="states.data && states.data.is_new_user === false" class="text-2xl">
-			{{ states.data.user?.firstname }} 🏆
+		<span v-if="states.data && states.data.is_new_user === false" class="text-xl">
+			 
 		</span>
-		<span v-else>
-			Анкетирование нового пользователя 🏆
+		<span v-else class="text-xl">
+			
 		</span>
 
 		<base-page
@@ -79,21 +79,38 @@ const openCardDetail = (state: string) => {
 		>
 			<div v-if="states.data">
 				<div v-if="states.data.is_new_user === false">
-					<h2> 
-						У вас есть аккаунт💪🏽 
-						<br>
-						Ссылка на оплату
-					</h2> 
+					<UCard variant="subtle" class="mt-[20px] text-white">
+						<template #header>
+							<h2> 
+								У вас есть аккаунт в приложении💪🏽 
+							</h2> 
+						</template>
+
+						<div class="flex items-center gap-[10px]">
+							<UAvatar :src="states.data.user.avatar_url" size="xl" />
+							<span>{{ states.data.user?.firstname +  ' ' + states.data.user?.lastname }} 🏆</span>
+						</div>
+						
+						<template #footer>
+							<UButton>
+								<a :href="states.data.buy_link" target="_blank">
+									<span class="text-[14px] line-clamp-1">
+										Оплатить
+									</span>
+								</a>
+							</UButton>
+						</template>
+					</UCard>
 				</div>
 
-				<div v-else>
-					<h2> 
+				<div v-else class="text-white">
+					<h2>
 						Упс! Мы заметили что у Вас нет аккаунта.
 						<br>
 						Надо пройти небольшое анкетирование для Вашего результата💪🏽 
 					</h2>
 					<br>
-					<UButton size="lg" @click="openCardDetail('register')">
+					<UButton @click="openCardDetail('register')">
 						<span class="text-[14px] line-clamp-1">Пройти анкетирование</span>
 					</UButton>
 				</div>

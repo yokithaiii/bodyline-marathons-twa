@@ -2,7 +2,7 @@
 @import '@nuxt/ui';
 
 @theme {
-	--font-sans: 'Rubik', sans-serif;
+	--font-sans: 'Onest', sans-serif;
 
 	--breakpoint-3xl: 1920px;
 

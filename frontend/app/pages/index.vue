@@ -44,37 +44,37 @@ onMounted(() => {
 	store.value.username = tma.initDataUnsafe.user?.username;
 	getMarathon();
 });
+
 </script>
 
 <template>
 	<section class="l-index">
-		<div class="bg-emerald-100 dark:bg-zinc-800 rounded-[8px] mt-1">
+		<div class="bg-emerald-100 dark:bg-zinc-950 rounded-[8px] mt-1">
 			<div class="l-wrapper">
 				<div class="py-4">
-					<h1 class="text-2xl">
-						Привет,
-						<span v-if="tma.initDataUnsafe">
-							{{ tma.initDataUnsafe?.user?.username ?? 'незнакомец' }}
-						</span>
+					<h1 class="text-xl text-white">
+						Привет
 						<span class="text-emerald-400">!</span>
-						<br />
-						<span>
-							Вы на странице покупки марафона - 
-						</span>
-						<span class="text-emerald-400">{{ states.data?.title }}</span>
 					</h1>
+					
+					<h2 class="text-lg text-white">
+						Вы на странице покупки марафона -
+						<br>
+						<span class="text-emerald-400">"{{ states.data?.title }}"</span>
+					</h2>
 
-					<div v-if="store.email" class="mt-2">
+					<div v-if="store.email" class="mt-2 text-white">
 						<span class="text-[14px]">
 							Указанная почта:
 							<span class="text-emerald-400" @click="openModalEmail">
 								{{ store.email }}
 							</span>
-							- тыкните чтобы изменить
+							- нажмите чтобы изменить
 						</span>
 					</div>
 
 					<main-buttons />
+
 				</div>
 			</div>
 		</div>
@@ -82,13 +82,17 @@ onMounted(() => {
 		<UDrawer v-model:open="drawerContent.isOpen">
 			<template #content>
 				<article class="my-4 px-2 h-screen overflow-y-auto">
-				
+
 					<template v-if="drawerContent.state === 'marathon'">
 						<action-get-marathon />
 					</template>
 
 					<template v-if="drawerContent.state === 'register'">
 						<action-register-user />
+					</template>
+
+					<template v-if="drawerContent.state === 'marathonList'">
+						<action-marathons-list />
 					</template>
 
 				</article>

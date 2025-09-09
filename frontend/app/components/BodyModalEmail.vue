@@ -59,7 +59,7 @@ const handleAcceptChange = () => {
 					<span>{{ props.descr }} </span>
 				</header>
 
-				<main class="py-4">
+				<main class="py-2">
 					<template v-if="states.loading">
 						<div class="w-full flex justify-center">
 							<div class="spinner" />
@@ -76,10 +76,10 @@ const handleAcceptChange = () => {
 							Некорректный email
 						</span>
 
-						<UButton v-if="props.state === 'email'" class="mt-2 block" :disabled="isNotValidEmail" @click="handleAcceptChange">
+						<UButton v-if="props.state === 'email'" class="mt-4 block" :disabled="isNotValidEmail" @click="handleAcceptChange">
 							Принять
 						</UButton>
-						<UButton v-else class="mt-2 block" :disabled="isNotValidEmail" @click="handleEmail">Поиск</UButton>
+						<UButton v-else class="mt-4 block" :disabled="isNotValidEmail" @click="handleEmail">Поиск</UButton>
 					</template>
 				</main>
 			</article>
