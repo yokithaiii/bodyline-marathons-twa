@@ -2,7 +2,7 @@
 import { SlideOver } from '#components';
 
 const colorMode = useColorMode();
-const slideover = useSlideover();
+// const slideover = useSlideover();
 
 const isDark = computed({
 	get() {
@@ -13,9 +13,9 @@ const isDark = computed({
 	},
 });
 
-function openSlideover() {
-	slideover.open(SlideOver, { title: 'Полезные ссылки' });
-}
+// function openSlideover() {
+// 	slideover.open(SlideOver, { title: 'Полезные ссылки' });
+// }
 </script>
 
 <template>
@@ -28,9 +28,9 @@ function openSlideover() {
 
 				<div class="flex items-center gap-1">
 					<UButton :icon="isDark ? 'i-lucide-moon' : 'i-lucide-sun'" color="primary" variant="ghost" @click="isDark = !isDark" />
-					<button class="flex" @click="openSlideover">
+					<!-- <button class="flex" @click="openSlideover">
 						<UIcon name="i-prime:align-justify" class="size-7 bg-emerald-400" />
-					</button>
+					</button> -->
 				</div>
 			</div>
 		</div>
