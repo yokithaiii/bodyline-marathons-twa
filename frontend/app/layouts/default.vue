@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-	<section class="layout">
+	<section class="layout mt-[20px]">
 		<main-header />
 
 		<main class="content">

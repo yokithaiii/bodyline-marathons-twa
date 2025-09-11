@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { StepperItem } from '@nuxt/ui';
+
 const drawerContent = useDrawer();
 
 const states = reactive({
@@ -41,15 +43,53 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener('message', handleMessage);
 });
+
+const items = ref<StepperItem[]>([
+    {
+        title: 'Авторизация',
+        description: 'Отправьте нам ваш Email',
+        icon: 'ant-design:mail-outlined'
+    },
+    {
+        title: 'Оплата',
+        description: 'Доступ к тренировкам',
+        icon: 'ant-design:credit-card-outlined'
+    },
+    {
+        title: 'Ваши данные',
+        description: 'Доступ к закрытому каналу',
+        icon: 'material-symbols:person'
+    }
+])
+
+const active = ref(1)
+
+async function goNext() {
+    drawerContent.value.state = 'final-page';
+}
 </script>
 
 <template>
-  <div style="height: 100%;">
+  <div style="height: 100%;" class="px-2">
+
+    <UStepper v-model="active" :items="items" size="sm" class="w-full" disabled />
+
+    <USeparator class="mt-4" />
+
     <base-page class="mt-2 h-[100%]" :loading="states.loading" :error-text="states.errorText" :show-error-btn="true"
       @refresh="handleRefreshPage">
+      its payment page
       <iframe v-if="drawerContent.paymentUrl" :src="drawerContent.paymentUrl" class="payment-webview"
-        @load="handleWebViewLoad" @error="handleWebViewError" frameborder="0" allow="payment *"
-        allowfullscreen></iframe>
+        @load="handleWebViewLoad" @error="handleWebViewError" frameborder="0" allow="payment *" allowfullscreen>
+      </iframe>
+
+      <UButton class="justify-center" size="lg" @click="goNext" :loading="states.loading"
+        :disabled="states.loading">
+        <span class="text-[16px] line-clamp-1">
+          {{ states.loading ? 'Сохранение...' : 'Сохранить данные' }}
+        </span>
+      </UButton>
+
 
     </base-page>
   </div>

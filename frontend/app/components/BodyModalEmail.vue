@@ -8,7 +8,7 @@ const store = useStore();
 const drawerContent = useDrawer();
 
 const props = withDefaults(defineProps<{ title: string; descr?: string; state?: string }>(), {
-	descr: 'Для начала напишите ваш email:',
+	descr: 'Напишите ваш email:',
 	state: 'base',
 });
 
@@ -27,7 +27,15 @@ const isNotValidEmail = computed(() => {
 
 async function setEmailUser(val: string) {
 	store.value.email = val;
+
+	store.value.phone = null;
+	store.value.firstname = null;
+	store.value.lastname = null;
 	store.value.password = null;
+	store.value.avatar = null;
+	store.value.buy_link = null;
+	store.value.is_new_user = false;
+	store.value.have_workout = false;
 }
 
 const handleEmail = async () => {

@@ -67,7 +67,7 @@
 		max-width: 768px;
 		margin: 0 auto;
 		width: 100%;
-		padding: 0 8px;
+		padding: 0 16px;
 	}
 
 	@media (width >= 40rem) {
@@ -110,3 +110,4 @@
 		-webkit-transform: rotate(360deg);
 	}
 }
+

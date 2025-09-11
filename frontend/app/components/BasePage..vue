@@ -28,17 +28,18 @@ const startWithText = computed(() => {
 			</span>
 			<template v-if="!startWithText">
 				<div class="flex items-center gap-2">
-					<UButton v-if="states.showErrorBtn" class="mt-2 block" @click="emits('refresh')">Попробовать еще
+					<UButton v-if="states.showErrorBtn" class="mt-2 block text-[16px]" @click="emits('refresh')">Попробовать еще
 					</UButton>
-					<UButton v-if="states.showAccessBtn" class="mt-2 block" @click="emits('refresh', 'buy_access')">
-						Купить</UButton>
+					<UButton v-if="states.showAccessBtn" class="mt-2 block text-[16px]" @click="emits('refresh', 'buy_access')">
+						Купить
+					</UButton>
 				</div>
 				<span v-if="states.showAccessBtn" class="text-sm mt-1 block">
 					Нажав на кнопку "Купить" вы оформляете подписку на того тренера, которую выбрали!
 				</span>
 			</template>
 			<template v-else>
-				<UButton class="mt-2 block" @click="emits('refresh')">Назад</UButton>
+				<UButton class="mt-2 block text-[16px]" @click="emits('refresh')">Назад</UButton>
 			</template>
 		</template>
 

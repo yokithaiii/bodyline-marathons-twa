@@ -5,6 +5,7 @@ export default function () {
 		return {
 			isOpen: false,
 			state: null,
+			paymentUrl: null,
 		};
 	});
 }

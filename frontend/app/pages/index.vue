@@ -43,7 +43,6 @@ const getMarathon = async () => {
 };
 
 onMounted(() => {
-	store.value.username = tma.initDataUnsafe.user?.username;
 	getMarathon();
 });
 
@@ -55,15 +54,20 @@ onMounted(() => {
 			<div class="l-wrapper">
 				<div class="py-4">
 					<h1 class="text-xl text-white">
-						Привет
-						<span class="text-emerald-400">!</span>
+						Привет<span class="text-emerald-400 ml-[2px]">!</span>
 					</h1>
 
-					<h2 class="text-lg text-white">
-						Вы на странице покупки марафона -
-						<br>
-						<span class="text-emerald-400">"{{ states.data?.title }}"</span>
-					</h2>
+					<template v-if="states.loading">
+						<USkeleton class="mt-2 h-5 w-[300px] mb-1" />
+						<USkeleton class="mt-2 h-5 w-[250px]" />
+					</template>
+					<template v-else>
+						<h2 class="text-lg text-white mt-2">
+							Вы на странице покупки марафона -
+							<br>
+							<span class="text-emerald-400">{{ states.data?.title }}</span>
+						</h2>
+					</template>
 
 					<div v-if="store.email" class="mt-2 text-white">
 						<span class="text-[14px]">
@@ -85,16 +89,20 @@ onMounted(() => {
 			<template #content>
 				<article class="my-4 px-2 h-screen overflow-y-auto">
 
-					<template v-if="drawerContent.state === 'marathon'">
-						<action-get-marathon />
+					<template v-if="drawerContent.state === 'get-email-page'">
+						<action-get-email />
 					</template>
 
-					<template v-if="drawerContent.state === 'register'">
-						<action-register-user />
-					</template>
-
-					<template v-if="drawerContent.state === 'pay'">
+					<template v-if="drawerContent.state === 'payment-page'">
 						<action-payment-page />
+					</template>
+
+					<template v-if="drawerContent.state === 'final-page'">
+						<action-final-page />
+					</template>
+
+					<template v-if="drawerContent.state === 'get-phone-page'">
+						<action-get-phone />
 					</template>
 
 				</article>

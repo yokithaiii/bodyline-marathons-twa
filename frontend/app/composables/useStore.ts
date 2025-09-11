@@ -4,13 +4,14 @@ export default function () {
 	return useState<IStore>('base-store', () => {
 		return {
 			email: null,
-			isValidateEmail: false,
-			username: null,
-			name: null,
 			phone: null,
-			birthdate: null,
-			weight: null,
-			height: null,
+			firstname: null,
+			lastname: null,
+			password: null,
+			avatar: null,
+			buy_link: null,
+			have_workout: false,
+			is_new_user: false,
 		}
 	});
 }

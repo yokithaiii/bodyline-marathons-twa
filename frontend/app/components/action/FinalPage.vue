@@ -1,0 +1,161 @@
+<script setup lang="ts">
+import type { StepperItem } from '@nuxt/ui'
+import type { IListMarathon } from '~/types/common'
+
+const drawerContent = useDrawer()
+const store = useStore()
+
+const states = reactive({
+	text: '',
+	loading: false,
+	errorText: null as null | string,
+	data: null as null | IListMarathon,
+})
+
+const getData = async () => {
+	states.loading = true;
+	try {
+		const res = await $fetch.raw<IListMarathon>(useApi() + `/check-user?email=` + store.value.email);
+
+		if (res.status === 200 && res._data) {
+			states.data = res._data;
+			states.data.user.email = store.value.email;
+			states.data.user.password = store.value.password;
+		}
+
+	} catch (err: any) {
+		states.errorText = null;
+		console.error(err);
+		states.errorText = err.data.error || 'Что - то пошло не так, попробуйте еще';
+	} finally {
+		states.loading = false;
+	}
+}
+
+onMounted(() => {
+	console.log(store.value)
+	if (store.value.phone === null || store.value.phone === undefined) {
+		drawerContent.value.state = 'get-phone-page';
+	}
+
+	// getData();
+})
+
+const handleRefreshPage = () => {
+	states.errorText = null;
+	// getData();
+}
+
+const openApp = () => {
+	window.location.href = 'bodyline://';
+
+	setTimeout(() => {
+		window.open('https://onelink.to/fj8nnp', '_blank');
+	}, 500);
+}
+
+const openCloseChat = () => {
+	window.open('https://t.me/+LMcFQuT-iVBhMzBi', '_blank');
+}
+
+const copyToClipboard = async (text: string) => {
+  try {
+    await navigator.clipboard.writeText(text);
+    useToast().add({
+      title: '✅ Скопировано в буфер обмена',
+      close: false,
+    });
+  } catch (err) {
+    console.error('Ошибка копирования:', err);
+    useToast().add({
+      title: '❌ Не удалось скопировать',
+      close: false,
+    });
+  }
+}
+
+const items = ref<StepperItem[]>([
+	{
+		title: 'Авторизация',
+		description: 'Отправьте нам ваш Email',
+		icon: 'ant-design:mail-outlined'
+	},
+	{
+		title: 'Оплата',
+		description: 'Доступ к тренировкам',
+		icon: 'ant-design:credit-card-outlined'
+	},
+	{
+		title: 'Ваши данные',
+		description: 'Доступ к закрытому каналу',
+		icon: 'material-symbols:person-outline'
+	}
+])
+
+const active = ref(2)
+</script>
+
+<template>
+	<div class="px-2">
+
+		<UStepper v-model="active" :items="items" size="sm" class="w-full" disabled />
+
+		<USeparator class="mt-4" />
+
+		<base-page class="mt-4" :loading="states.loading" :error-text="states.errorText" :show-error-btn="true"
+			@refresh="handleRefreshPage">
+
+			<div v-if="states.data">
+				<UCard variant="subtle" class="mt-[20px] text-white">
+					<template #header>
+						<h2>
+							Вы успешно купили марафон 💪🏽
+						</h2>
+					</template>
+
+					<div class="flex items-center gap-[10px]">
+						<UChip position="bottom-right" color="success" inset>
+							<UAvatar v-if="states.data.user.avatar_url" :src="states.data.user.avatar_url" size="xl" />
+							<UAvatar v-else alt="B L" size="xl" />
+						</UChip>
+						<span>{{ states.data.user?.firstname ?? 'Имя' }} {{ states.data.user?.lastname ?? 'Фамилия' }}🏆</span>
+					</div>
+
+					<div v-if="states.data.user.password" class="mt-[10px]">
+						<span class="cursor-pointer" @click="copyToClipboard(states.data.user?.email ?? '')">
+							Ваш логин: <code class="text-secondary text-sm">{{ states.data.user?.email ?? '' }}</code>
+						</span>
+						<br>
+						<span class="cursor-pointer" @click="copyToClipboard(states.data.user?.password ?? '')">
+							Ваш новый пароль: <code class="text-secondary text-sm">{{ states.data.user?.password ?? '' }}</code>
+						</span>
+					</div>
+
+					<template #footer>
+						<div class="l-grid">
+							<UButton @click="openCloseChat()" class="justify-center bg-stone-300">
+								<span class="text-[14px] line-clamp-1">Открыть закрытый чат</span>
+							</UButton>
+							<UButton @click="openApp()" class="justify-center">
+								<span class="text-[14px] line-clamp-1">Запустить приложение</span>
+							</UButton>
+						</div>
+					</template>
+				</UCard>
+			</div>
+
+			<div v-else>
+				Данные не найдены
+			</div>
+
+		</base-page>
+	</div>
+</template>
+
+<style scoped>
+.l-grid {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+</style>
