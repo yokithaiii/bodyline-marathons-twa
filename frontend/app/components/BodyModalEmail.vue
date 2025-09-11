@@ -27,6 +27,7 @@ const isNotValidEmail = computed(() => {
 
 async function setEmailUser(val: string) {
 	store.value.email = val;
+	store.value.password = null;
 }
 
 const handleEmail = async () => {

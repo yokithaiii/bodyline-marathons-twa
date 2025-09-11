@@ -7,4 +7,5 @@ export interface IStore {
 	birthdate: string | null;
 	weight: number | null;
 	height: number | null;
+	password: string | null;
 }

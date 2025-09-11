@@ -34,6 +34,7 @@ async function loadSavedData() {
 			birthdate: store.value.birthdate,
 			weight: store.value.weight,
 			height: store.value.height,
+			password: store.value.password,
 		};
 	} catch (err) {
 		console.error('Ошибка загрузки данных:', err);
@@ -75,7 +76,7 @@ const registerUser = async (item: IUser) => {
 	states.loading = true;
 	try {
 		let clearPhone = item.phone?.replace(/\D/g, '') ?? null;
-		const res = await $fetch.raw<{ message: string }>(useApi() + '/register-user', {
+		const res = await $fetch.raw<{ message: string, password: string }>(useApi() + '/register-user', {
 			method: 'POST',
 			body: {
 				email: item.email,
@@ -89,6 +90,9 @@ const registerUser = async (item: IUser) => {
 
 		if (res.status === 200 && res._data) {
 			useDrawer().value.isOpen = false;
+
+			console.log(res._data)
+			store.value.password = res._data.password;
 
 			useToast().add({
 				title: '✅ Данные успешно сохранены!',

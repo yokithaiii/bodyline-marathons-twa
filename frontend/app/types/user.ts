@@ -5,4 +5,5 @@ export interface IUser {
 	birthdate: string | null;
 	weight: number | null;
 	height: number | null;
+	password: string | null;
 }

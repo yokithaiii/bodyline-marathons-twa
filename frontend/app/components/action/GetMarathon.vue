@@ -9,6 +9,7 @@ interface IListMarathon {
 		firstname: string;
 		lastname: string;
 		avatar_url: string;
+		password: string | null;
 	};
 	workout: {
 		id: string;
@@ -19,6 +20,7 @@ interface IListMarathon {
 }
 
 const drawerContent = useDrawer();
+const store = useStore();
 
 const states = reactive({
 	text: '',
@@ -35,6 +37,7 @@ const getData = async () => {
 
 		if (res.status === 200 && res._data) {
 			states.data = res._data;
+			states.data.user.password = store.value.password;
 		}
 
 	} catch (err: any) {
@@ -91,6 +94,10 @@ const openCardDetail = (state: string) => {
 						<div class="flex items-center gap-[10px]">
 							<UAvatar v-if="states.data.user.avatar_url" :src="states.data.user.avatar_url" size="xl" />
 							<span>{{ states.data.user?.firstname }} {{ states.data.user?.lastname != null ? states.data.user?.lastname : '' }}🏆</span>
+						</div>
+						
+						<div v-if="states.data.user.password" class="mt-[10px]">
+							<span>Ваш новый пароль: {{ states.data.user?.password ?? '' }}</span>
 						</div>
 
 						<template #footer>
