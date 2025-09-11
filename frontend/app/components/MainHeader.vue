@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { SlideOver } from '#components';
+// import { SlideOver } from '#components';
 
 const colorMode = useColorMode();
-const slideover = useSlideover();
+// const slideover = useSlideover();
 
 const isDark = computed({
 	get() {
