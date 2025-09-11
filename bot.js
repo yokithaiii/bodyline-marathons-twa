@@ -13,7 +13,7 @@ bot.use(stage.middleware());
 bot.command('start', ctx => {
     const openTMAButton = {
         text: 'Открыть мини-приложение 🚀',
-        web_app: { url: 'https://support.bodylineapp.com/' }
+        web_app: { url: 'https://marathonsbot.bodylineapp.com/' }
     };
 
     ctx.reply(START_MESSAGE(ctx.from.first_name), {
