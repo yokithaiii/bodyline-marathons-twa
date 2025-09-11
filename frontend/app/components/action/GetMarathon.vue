@@ -100,6 +100,7 @@ const openCardDetail = (state: string) => {
 						
 						<div v-if="states.data.user.password" class="mt-[10px]">
 							<span>Ваш логин: {{ states.data.user?.email ?? ''}}</span>
+							<br>
 							<span>Ваш новый пароль: {{ states.data.user?.password ?? '' }}</span>
 						</div>
 
