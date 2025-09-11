@@ -10,6 +10,7 @@ interface IListMarathon {
 		lastname: string;
 		avatar_url: string;
 		password: string | null;
+		email: string | null;
 	};
 	workout: {
 		id: string;
@@ -33,11 +34,12 @@ const states = reactive({
 const getData = async () => {
 	states.loading = true;
 	try {
-		const res = await $fetch.raw<IListMarathon>(useApi() + `/check-user?email=` + useStore().value.email);
+		const res = await $fetch.raw<IListMarathon>(useApi() + `/check-user?email=` + store.value.email);
 
 		if (res.status === 200 && res._data) {
 			states.data = res._data;
 			states.data.user.password = store.value.password;
+			states.data.user.email = store.value.email;
 		}
 
 	} catch (err: any) {
@@ -97,6 +99,7 @@ const openCardDetail = (state: string) => {
 						</div>
 						
 						<div v-if="states.data.user.password" class="mt-[10px]">
+							<span>Ваш логин: {{ states.data.user?.email ?? ''}}</span>
 							<span>Ваш новый пароль: {{ states.data.user?.password ?? '' }}</span>
 						</div>
 
