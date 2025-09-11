@@ -1,18 +1,18 @@
 <script setup lang="ts">
 import { BodyModalEmail } from '#components';
 
+const overlay = useOverlay();
+const modal = overlay.create(BodyModalEmail);
 const store = useStore();
-// const modal = useModal();
 const drawerContent = useDrawer();
 
 const openCardDetail = (state: string) => {
 	drawerContent.value.state = state;
 
 	if (!store.value.email) {
-		console.log('need to open modal')
-		// modal.open(BodyModalEmail, {
-		// 	title: 'Поиск аккаунта',
-		// });
+		modal.open({
+			title: 'Поиск аккаунта',
+		});
 	} else {
 		drawerContent.value.isOpen = true;
 	}

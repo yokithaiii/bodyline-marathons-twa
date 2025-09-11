@@ -16,7 +16,7 @@ const socials = [
 </script>
 
 <template>
-	<USlideover class="max-w-[320px]" title="Slideover with close button" close-icon="i-akar-icons:cross">
+	<USlideover class="max-w-[320px]" title="Полезные ссылки" close-icon="i-akar-icons:cross">
 		<template #body>
 			<div class="flex flex-col h-full">
 				<ul class="grid grid-cols-5 gap-2">

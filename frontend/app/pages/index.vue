@@ -13,13 +13,15 @@ const states = reactive({
 const tma = useWebApp();
 const store = useStore();
 const drawerContent = useDrawer();
+const overlay = useOverlay();
+const modal = overlay.create(BodyModalEmail);
 
 const openModalEmail = () => {
-	// useModal().open(BodyModalEmail, {
-	// 	title: 'Смена почты',
-	// 	descr: ' Укажите новую почту:',
-	// 	state: 'email',
-	// });
+  modal.open({
+    title: 'Смена почты',
+    descr: 'Укажите новую почту:',
+    state: 'email',
+  });
 };
 
 const getMarathon = async () => {

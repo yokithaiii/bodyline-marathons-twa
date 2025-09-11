@@ -1,6 +1,9 @@
 <script setup lang="ts">
 
-// const modal = useModal();
+const emit = defineEmits<{
+  close: []
+}>();
+
 const store = useStore();
 const drawerContent = useDrawer();
 
@@ -32,7 +35,7 @@ const handleEmail = async () => {
 	}
 
 	setEmailUser(states.email.trim());
-	// await modal.close();
+	emit('close');
 
 	setTimeout(() => {
 		drawerContent.value.isOpen = true;
@@ -41,7 +44,7 @@ const handleEmail = async () => {
 
 const handleAcceptChange = () => {
 	setEmailUser(states.email.trim());
-	// modal.close();
+	emit('close');
 };
 </script>
 
