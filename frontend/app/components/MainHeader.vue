@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { SlideOver } from '#components';
+import { SlideOver } from '#build/components';
 
 const colorMode = useColorMode();
 const slideover = useSlideover();
