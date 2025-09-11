@@ -15,11 +15,11 @@ const store = useStore();
 const drawerContent = useDrawer();
 
 const openModalEmail = () => {
-	useModal().open(BodyModalEmail, {
-		title: 'Смена почты',
-		descr: ' Укажите новую почту:',
-		state: 'email',
-	});
+	// useModal().open(BodyModalEmail, {
+	// 	title: 'Смена почты',
+	// 	descr: ' Укажите новую почту:',
+	// 	state: 'email',
+	// });
 };
 
 const getMarathon = async () => {

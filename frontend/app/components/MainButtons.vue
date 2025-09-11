@@ -2,16 +2,17 @@
 import { BodyModalEmail } from '#components';
 
 const store = useStore();
-const modal = useModal();
+// const modal = useModal();
 const drawerContent = useDrawer();
 
 const openCardDetail = (state: string) => {
 	drawerContent.value.state = state;
 
 	if (!store.value.email) {
-		modal.open(BodyModalEmail, {
-			title: 'Поиск аккаунта',
-		});
+		console.log('need to open modal')
+		// modal.open(BodyModalEmail, {
+		// 	title: 'Поиск аккаунта',
+		// });
 	} else {
 		drawerContent.value.isOpen = true;
 	}
