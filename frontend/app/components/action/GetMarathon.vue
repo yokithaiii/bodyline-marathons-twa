@@ -89,8 +89,8 @@ const openCardDetail = (state: string) => {
 						</template>
 
 						<div class="flex items-center gap-[10px]">
-							<UAvatar :src="states.data.user.avatar_url" size="xl" />
-							<span>{{ states.data.user?.firstname + ' ' + states.data.user?.lastname }} 🏆</span>
+							<UAvatar v-if="states.data.user.avatar_url" :src="states.data.user.avatar_url" size="xl" />
+							<span>{{ states.data.user?.firstname }} {{ states.data.user?.lastname != null ? states.data.user?.lastname : '' }}🏆</span>
 						</div>
 
 						<template #footer>
