@@ -47,8 +47,7 @@ const getData = async () => {
 }
 
 onMounted(() => {
-	console.log(store.value)
-	if (store.value.phone === null || store.value.phone === undefined) {
+	if (states.data?.user.phone) {
 		drawerContent.value.state = 'get-phone-page';
 	}
 
