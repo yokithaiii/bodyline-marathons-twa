@@ -32,13 +32,24 @@ const saveUserData = async () => {
 
         store.value.phone = states.userData.phone;
 
-        drawerContent.value.state = 'final-page';
-
-        useToast().add({
-            title: '✅ Номер телефона успешно сохранен!',
-            close: false,
+        const response = await $fetch.raw(`${useApi()}/register-user`, {
+            method: 'POST',
+            body: {
+                email: store.value.email,
+                phone: states.userData.phone
+            }
         });
+    
+        if (response.status === 200) {
+            useToast().add({
+                title: '✅ Номер телефона успешно сохранен!',
+                close: false,
+            });
 
+            drawerContent.value.state = 'final-page';
+        } else {
+            throw new Error('Ошибка сервера');
+        }
     } catch (err) {
         console.error('Ошибка сохранения:', err);
         states.errorText = 'Ошибка при сохранении данных';
