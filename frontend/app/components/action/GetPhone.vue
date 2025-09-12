@@ -92,6 +92,12 @@ function formatPhone(event: Event) {
     const input = event.target as HTMLInputElement;
     let value = input.value.replace(/\D/g, '');
 
+    const invalidFirstDigits = '01234569';
+    if (value && invalidFirstDigits.includes(value.charAt(0))) {
+        states.errorText = `Номер телефона не может начинаться с ${value.charAt(0)}`;
+        return false;
+    }
+    
     if (value.length > 0) {
         value = value.replace(/^(\d{0,1})?(\d{0,3})?(\d{0,3})?(\d{0,4})?/, (match, p1, p2, p3, p4) => {
         let result = '';

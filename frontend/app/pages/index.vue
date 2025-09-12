@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useWebApp } from 'vue-tg';
-import { BodyModalEmail } from '#components';
 import type { IMarathon } from '~/types/marathon';
 
 const states = reactive({
@@ -8,20 +6,23 @@ const states = reactive({
 	loading: false,
 	errorText: null as null | string,
 	data: null as null | IMarathon,
+	disabled: false
 });
 
-const tma = useWebApp();
 const store = useStore();
 const drawerContent = useDrawer();
-const overlay = useOverlay();
-const modal = overlay.create(BodyModalEmail);
 
 const openModalEmail = () => {
-  modal.open({
-    title: 'Смена почты',
-    descr: 'Укажите новую почту:',
-    state: 'email',
-  });
+	store.value.phone = null;
+	store.value.firstname = null;
+	store.value.lastname = null;
+	store.value.password = null;
+	store.value.avatar = null;
+	store.value.buy_link = null;
+	store.value.is_new_user = false;
+	store.value.have_workout = false;
+	drawerContent.value.isOpen = true;
+	drawerContent.value.state = 'get-email-page';
 };
 
 const getMarathon = async () => {
@@ -31,10 +32,13 @@ const getMarathon = async () => {
 
 		if (res.status === 200 && res._data) {
 			states.data = res._data;
+		} else {
+			states.disabled = true;
 		}
 
 	} catch (err: any) {
 		states.errorText = null;
+		states.disabled = true;
 		console.error(err);
 		states.errorText = err.data.error || 'Что - то пошло не так, попробуйте еще';
 	} finally {
@@ -65,7 +69,8 @@ onMounted(() => {
 						<h2 class="text-lg text-white mt-2">
 							Вы на странице покупки марафона -
 							<br>
-							<span class="text-emerald-400">{{ states.data?.title }}</span>
+							<span class="text-emerald-400">{{ states.data?.title ?? 'Не удалось загрузить марафон'
+								}}</span>
 						</h2>
 					</template>
 
@@ -79,7 +84,7 @@ onMounted(() => {
 						</span>
 					</div>
 
-					<main-buttons />
+					<main-buttons :loading="states.loading" :disabled="states.disabled" />
 
 				</div>
 			</div>

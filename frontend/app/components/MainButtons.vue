@@ -2,6 +2,11 @@
 const drawerContent = useDrawer();
 const store = useStore();
 
+const props = defineProps<{
+	loading: boolean;
+	disabled: boolean;
+}>();
+
 const openCardDetail = (state: string) => {
 	if (store.value.email) {
 		if (store.value.have_workout) {
@@ -26,8 +31,10 @@ const actionButtons = [
 
 <template>
 	<section class="l-buttons gap-1 mt-4">
-		<UButton class="justify-center" v-for="item in actionButtons" :key="item.id" size="lg" @click="openCardDetail(item.state)">
-			<span class="text-[18px] line-clamp-1"> {{ item.title }} </span>
+		<UButton class="justify-center" v-for="item in actionButtons" :key="item.id" size="lg"
+			@click="openCardDetail(item.state)" :disabled="disabled">
+			<UIcon v-if="props.loading" name="svg-spinners:ring-resize" class="size-5" />
+			<span v-else class="text-[18px] line-clamp-1"> {{ item.title }} </span>
 		</UButton>
 	</section>
 </template>

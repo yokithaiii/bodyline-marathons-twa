@@ -5,22 +5,36 @@ import type { IListMarathon } from '~/types/common'
 const drawerContent = useDrawer()
 const store = useStore()
 
+interface IPassword {
+	password: null | string
+}
+
 const states = reactive({
 	text: '',
 	loading: false,
 	errorText: null as null | string,
 	data: null as null | IListMarathon,
+	password: null as null | string,
 })
 
 const getData = async () => {
 	states.loading = true;
 	try {
-		const res = await $fetch.raw<IListMarathon>(useApi() + `/check-user?email=` + store.value.email);
+		const res = await $fetch.raw<IListMarathon>(`${useApi()}/check-user?email=${store.value.email}`);
 
 		if (res.status === 200 && res._data) {
 			states.data = res._data;
 			states.data.user.email = store.value.email;
-			states.data.user.password = store.value.password;
+		}
+
+		if (!store.value.password) {
+			const res2 = await $fetch.raw<IPassword>(`${useApi()}/get-password?email=${store.value.email}&is_new_user=${store.value.is_new_user ? 'Y' : 'N'}`);
+			if (res2.status === 200 && res2._data) {
+				if (states.data) {
+					states.password = res2._data.password;
+					store.value.password = states.password;
+				}
+			}
 		}
 
 	} catch (err: any) {
@@ -38,12 +52,12 @@ onMounted(() => {
 		drawerContent.value.state = 'get-phone-page';
 	}
 
-	// getData();
+	getData();
 })
 
 const handleRefreshPage = () => {
 	states.errorText = null;
-	// getData();
+	getData();
 }
 
 const openApp = () => {
@@ -108,8 +122,11 @@ const active = ref(2)
 			<div v-if="states.data">
 				<UCard variant="subtle" class="mt-[20px] text-white">
 					<template #header>
-						<h2>
+						<h2 v-if="states.data.have_workout">
 							Вы успешно купили марафон 💪🏽
+						</h2>
+						<h2 v-else>
+							Мы не смогли найти вашу покупку
 						</h2>
 					</template>
 
@@ -121,13 +138,13 @@ const active = ref(2)
 						<span>{{ states.data.user?.firstname ?? 'Имя' }} {{ states.data.user?.lastname ?? 'Фамилия' }}🏆</span>
 					</div>
 
-					<div v-if="states.data.user.password" class="mt-[10px]">
+					<div v-if="store.password && store.is_new_user" class="mt-[10px]">
 						<span class="cursor-pointer" @click="copyToClipboard(states.data.user?.email ?? '')">
 							Ваш логин: <code class="text-secondary text-sm">{{ states.data.user?.email ?? '' }}</code>
 						</span>
 						<br>
-						<span class="cursor-pointer" @click="copyToClipboard(states.data.user?.password ?? '')">
-							Ваш новый пароль: <code class="text-secondary text-sm">{{ states.data.user?.password ?? '' }}</code>
+						<span class="cursor-pointer" @click="copyToClipboard(store.password ?? '')">
+							Ваш новый пароль: <code class="text-secondary text-sm">{{ store.password ?? '' }}</code>
 						</span>
 					</div>
 
