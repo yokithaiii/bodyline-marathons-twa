@@ -14,7 +14,7 @@ const states = reactive({
 })
 
 onMounted(() => {
-    //
+     states.userData.phone = '+7 ('
 })
 
 const handleRefreshPage = () => {
@@ -30,7 +30,10 @@ const saveUserData = async () => {
             return;
         }
 
-        store.value.phone = states.userData.phone;
+        // Преобразуем номер в формат для сервера (только цифры)
+        const cleanPhone = states.userData.phone?.replace(/\D/g, '') || '';
+
+        store.value.phone = cleanPhone;
 
         const response = await $fetch.raw(`${useApi()}/register-user`, {
             method: 'POST',
@@ -46,7 +49,7 @@ const saveUserData = async () => {
                 close: false,
             });
 
-            store.value.phone = states.userData.phone;
+            store.value.phone = cleanPhone;
             drawerContent.value.state = 'final-page';
         } else {
             throw new Error('Ошибка сервера');
@@ -84,46 +87,28 @@ const items = ref<StepperItem[]>([
 const active = ref(2)
 
 function validateData(): boolean {
-    if (!states.userData.phone) {
-        states.errorText = 'Введите номер телефона';
+    if (!states.userData.phone || states.userData.phone.length < 18) {
+        states.errorText = 'Введите полный номер телефона';
         return false;
     }
 
-    const phoneRegex = /^[\d\+\(\)\-\s]{10,15}$/;
     const cleanPhone = states.userData.phone.replace(/\D/g, '');
+    if (cleanPhone.length !== 11) {
+        states.errorText = 'Номер телефона должен содержать 11 цифр';
+        return false;
+    }
 
-    if (cleanPhone.length < 10 || cleanPhone.length > 15 || !phoneRegex.test(states.userData.phone)) {
-        states.errorText = 'Введите корректный номер телефона (10-15 цифр)';
+    if (cleanPhone.charAt(0) !== '7' && cleanPhone.charAt(0) !== '8') {
+        states.errorText = 'Номер должен начинаться с 7 или 8';
+        return false;
+    }
+
+    if (cleanPhone.charAt(1) !== '9') {
+        states.errorText = 'Вторая цифра номера должна быть 9';
         return false;
     }
 
     return true;
-}
-
-function formatPhone(event: Event) {
-    const input = event.target as HTMLInputElement;
-    let value = input.value.replace(/\D/g, '');
-
-    const invalidFirstDigits = '01234569';
-    if (value && invalidFirstDigits.includes(value.charAt(0))) {
-        states.errorText = `Номер телефона не может начинаться с ${value.charAt(0)}`;
-        return false;
-    }
-    
-    if (value.length > 0) {
-        value = value.replace(/^(\d{0,1})?(\d{0,3})?(\d{0,3})?(\d{0,4})?/, (match, p1, p2, p3, p4) => {
-        let result = '';
-        if (p1) result += p1;
-        if (p2) result += ' ' + p2;
-        if (p3) result += ' ' + p3;
-        if (p4) result += ' ' + p4;
-        return result;
-        }).trim();
-    }
-
-    input.value = value;
-    states.userData.phone = value;
-    clearError();
 }
 
 function clearError() {
@@ -143,11 +128,11 @@ function clearError() {
 
             <section class="l-buttons gap-1 mt-4">
 
-                <label for="phone-input" class="l-label flex">
-                    <span>Номер телефона</span>
-                    <input type="tel" id="phone-input" placeholder="7 999 999 9999" :value="states.userData.phone"
-                        @input="formatPhone" maxlength="14">
-                </label>
+                <ProximaPhone
+                    class="l-label flex custom-phone-input"
+                    label="Введите ваш номер телефона"
+                    v-model="states.userData.phone"
+                />
 
                 <label class="l-label flex">
                     <UButton class="justify-center" size="lg" @click="saveUserData" :loading="states.loading"
@@ -165,6 +150,10 @@ function clearError() {
 </template>
 
 <style scoped>
+
+.custom-phone-input input {
+    background-color: red;
+}
 .l-label {
     display: flex;
     gap: 10px;

@@ -138,13 +138,17 @@ const active = ref(2)
 						<span>{{ states.data.user?.firstname ?? 'Имя' }} {{ states.data.user?.lastname ?? 'Фамилия' }}🏆</span>
 					</div>
 
-					<div v-if="store.password && store.is_new_user" class="mt-[10px]">
-						<span class="cursor-pointer" @click="copyToClipboard(states.data.user?.email ?? '')">
-							Ваш логин: <code class="text-secondary text-sm">{{ states.data.user?.email ?? '' }}</code>
+					<USeparator v-if="store.password && store.is_new_user" class="mt-4" />
+
+					<div v-if="store.password && store.is_new_user"  class="mt-[10px]">
+						<span>Ваши данные для входа в приложение:</span>
+						<br>
+						<span class="cursor-pointer text-xs" @click="copyToClipboard(states.data.user?.email ?? '')">
+							Ваш логин: <code class="text-secondary text-xs">{{ states.data.user?.email ?? '' }}</code>
 						</span>
 						<br>
-						<span class="cursor-pointer" @click="copyToClipboard(store.password ?? '')">
-							Ваш новый пароль: <code class="text-secondary text-sm">{{ store.password ?? '' }}</code>
+						<span class="cursor-pointer text-xs" @click="copyToClipboard(store.password ?? '')">
+							Ваш новый пароль: <code class="text-secondary text-xs">{{ store.password ?? '' }}</code>
 						</span>
 					</div>
 
