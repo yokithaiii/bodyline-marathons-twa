@@ -57,6 +57,18 @@ onMounted(() => {
 		<div class="bg-emerald-100 dark:bg-zinc-950 rounded-[8px] mt-1">
 			<div class="l-wrapper">
 				<div class="py-4">
+					<template v-if="states.loading">
+						<USkeleton class="mt-2 h-[250px] w-[250px]" />
+					</template>
+					<template v-else>
+						<img :src="states.data?.image" class="l-image" alt="">
+					</template>
+				</div>
+			</div>
+		</div>
+		<div class="bg-emerald-100 dark:bg-zinc-950 rounded-[8px] mt-1">
+			<div class="l-wrapper">
+				<div class="py-4">
 					<h1 class="text-xl text-white">
 						Привет<span class="text-emerald-400 ml-[2px]">!</span>
 					</h1>
@@ -77,7 +89,7 @@ onMounted(() => {
 					<div v-if="store.email" class="mt-2 text-white">
 						<span class="text-[14px]">
 							Указанная почта:
-							<span class="text-emerald-400" @click="openModalEmail">
+							<span class="text-emerald-400 decoration-underline" @click="openModalEmail">
 								{{ store.email }}
 							</span>
 							- нажмите чтобы изменить
@@ -115,3 +127,21 @@ onMounted(() => {
 		</UDrawer>
 	</section>
 </template>
+
+<style scoped>
+.l-index {
+	padding-bottom: 100px;
+}
+.decoration-underline {
+    background: #252525;
+    padding: 5px;
+    border: 1px solid;
+    border-radius: 6px;
+    width: 100%;
+    display: block;
+    margin: 5px 0;
+}
+.l-image {
+	border-radius: 4px;
+}
+</style>

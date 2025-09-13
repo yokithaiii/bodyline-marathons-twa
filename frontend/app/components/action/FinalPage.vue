@@ -25,6 +25,7 @@ const getData = async () => {
 		if (res.status === 200 && res._data) {
 			states.data = res._data;
 			states.data.user.email = store.value.email;
+			states.data.user.phone = store.value.phone;
 		}
 
 		if (!store.value.password) {
@@ -37,6 +38,10 @@ const getData = async () => {
 			}
 		}
 
+		if (!states.data?.user.phone) {
+			drawerContent.value.state = 'get-phone-page';
+		}
+
 	} catch (err: any) {
 		states.errorText = null;
 		console.error(err);
@@ -47,10 +52,6 @@ const getData = async () => {
 }
 
 onMounted(() => {
-	if (states.data?.user.phone) {
-		drawerContent.value.state = 'get-phone-page';
-	}
-
 	getData();
 })
 

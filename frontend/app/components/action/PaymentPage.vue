@@ -42,7 +42,7 @@ const startPaymentChecking = () => {
     }
     
     await checkPaymentStatus();
-  }, 5000);
+  }, 3000);
 };
 
 async function checkPaymentStatus() {
@@ -126,6 +126,10 @@ async function checkBuy() {
 async function goNext() {
 	drawerContent.value.state = 'final-page';
 }
+
+async function goPrev() {
+	drawerContent.value.state = 'get-email-page';
+}
 </script>
 
 <template>
@@ -135,7 +139,7 @@ async function goNext() {
 
 		<USeparator class="mt-4" />
 
-		<base-page class="mt-2 h-[100%]" :loading="states.loading" :error-text="states.errorText" :show-error-btn="true"
+		<base-page class="mt-2 height-calc" :loading="states.loading" :error-text="states.errorText" :show-error-btn="true"
 			@refresh="handleRefreshPage">
 
 			<div class="h-[100%] flex flex-col">
@@ -149,16 +153,23 @@ async function goNext() {
 				
 				<div v-else class="flex-1">
 					<iframe v-if="store.buy_link" :src="store.buy_link" class="payment-webview" @load="handleWebViewLoad"
-						@error="handleWebViewError" frameborder="0" allow="payment *" allowfullscreen>
+						@error="handleWebViewError" frameborder="0" allow="payment *" allowfullscreen scrolling="no" style="overflow: hidden;">
 					</iframe>
 				</div>
 
-				<UButton class="justify-center" size="lg" @click="goNext" :loading="states.loading"
-					:disabled="!states.paymentSuccess">
-					<span class="text-[16px] line-clamp-1">
-						{{ states.loading ? 'Сохранение...' : 'Дальше' }}
-					</span>
-				</UButton>
+				<section class="l-buttons gap-1 mt-4 l-fixed">
+					<UButton class="justify-center" size="lg" @click="goNext" :loading="states.loading"
+						:disabled="!states.paymentSuccess">
+						<span class="text-[16px] line-clamp-1">
+							{{ states.loading ? 'Сохранение...' : 'Дальше' }}
+						</span>
+					</UButton>
+					<UButton class="justify-center bg-black" size="lg" @click="goPrev" :loading="states.loading">
+						<span class="text-[16px] line-clamp-1 text-white">
+							Назад
+						</span>
+					</UButton>
+				</section>
 		
 			</div>
 
@@ -201,6 +212,35 @@ async function goNext() {
 	color: #666;
 	font-size: 14px;
 	line-height: 1.5;
+}
+
+.l-buttons {
+	display: grid;
+	grid-template-columns: 1fr;
+}
+.l-fixed {
+	position: fixed;
+    bottom: 50px;
+    left: 0;
+	width: 100%;
+    padding: 0 30px;
+	gap: 10px;
+}
+
+iframe {
+	overflow: scroll;
+}
+
+.height-calc {
+	height: calc(100% - 120px);
+	border-radius: 8px;
+    overflow: hidden;
+}
+
+.bg-black-custom {
+	background: black;
+    color: #de9f51;
+    border: 1px solid #de9f51;
 }
 
 /* Адаптивность для мобильных устройств */

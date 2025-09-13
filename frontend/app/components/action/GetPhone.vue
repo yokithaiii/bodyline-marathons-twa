@@ -46,6 +46,7 @@ const saveUserData = async () => {
                 close: false,
             });
 
+            store.value.phone = states.userData.phone;
             drawerContent.value.state = 'final-page';
         } else {
             throw new Error('Ошибка сервера');

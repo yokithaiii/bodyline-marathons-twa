@@ -3,4 +3,5 @@ export interface IMarathon {
 	title: string;
 	price: number;
 	description: string;
+	image: string;
 }
