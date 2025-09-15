@@ -54,9 +54,11 @@ export default defineNuxtConfig({
 		// other options
 	},
 	css: ['~/assets/css/main.css'],
-	vite: {
-		plugins: [Tailwind()],
-	},
+	// vite: {
+	// 	plugins: [
+	// 		Tailwind()
+	// 	],
+	// },
 
 	// ui: {
 	// 	theme: {
