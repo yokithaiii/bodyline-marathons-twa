@@ -16,6 +16,6 @@
     "eslint": "^9.17.0",
     "nuxt": "^3.16.0",
     "vue": "latest",
-    "vue-router": "latest",
+    "vue-router": "latest"
   }
 }
