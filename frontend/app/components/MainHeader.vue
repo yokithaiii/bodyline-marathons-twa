@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { SlideOver } from '#components';
 
-const colorMode = useColorMode();
 const overlay = useOverlay();
 const slideover = overlay.create(SlideOver);
 
@@ -11,7 +10,7 @@ const openSlideover = () => {
 </script>
 
 <template>
-	<header class="relative rounded-[8px] z-10 bg-emerald-100 dark:bg-zinc-950">
+	<header class="relative rounded-[8px] z-10 bg-zinc-950 dark:bg-zinc-950">
 		<div class="l-wrapper">
 			<div class="flex items-center justify-between gap-4 py-4">
 				<nuxt-link to="/" class="flex items-center gap-[10px] font-semibold">

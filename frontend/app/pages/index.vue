@@ -11,6 +11,7 @@ const states = reactive({
 
 const store = useStore();
 const drawerContent = useDrawer();
+const colorMode = useColorMode();
 
 const openModalEmail = () => {
 	store.value.phone = null;
@@ -48,13 +49,14 @@ const getMarathon = async () => {
 
 onMounted(() => {
 	getMarathon();
+	colorMode.preference = 'dark';
 });
 
 </script>
 
 <template>
 	<section class="l-index">
-		<div class="bg-emerald-100 dark:bg-zinc-950 rounded-[8px] mt-1">
+		<div class="bg-zinc-950 dark:bg-zinc-950 rounded-[8px] mt-1">
 			<div class="l-wrapper">
 				<div class="py-4">
 					<template v-if="states.loading">
@@ -66,7 +68,7 @@ onMounted(() => {
 				</div>
 			</div>
 		</div>
-		<div class="bg-emerald-100 dark:bg-zinc-950 rounded-[8px] mt-1">
+		<div class="bg-zinc-950 dark:bg-zinc-950 rounded-[8px] mt-1">
 			<div class="l-wrapper">
 				<div class="py-4">
 					<h1 class="text-xl text-white">

@@ -31,7 +31,7 @@ const actionButtons = [
 
 <template>
 	<section class="l-buttons gap-1 mt-4 l-fixed">
-		<UButton class="justify-center  b-0 l-0" v-for="item in actionButtons" :key="item.id" size="lg"
+		<UButton class="justify-center  b-0 l-0 bg-emerald-400" v-for="item in actionButtons" :key="item.id" size="lg"
 			@click="openCardDetail(item.state)" :disabled="disabled">
 			<UIcon v-if="props.loading" name="svg-spinners:ring-resize" class="size-5" />
 			<span v-else class="text-[18px] line-clamp-1"> {{ item.title }} </span>

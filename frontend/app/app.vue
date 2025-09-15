@@ -2,7 +2,11 @@
 import { useWebAppViewport } from 'vue-tg'
 
 onBeforeMount(() => {
-	useWebAppViewport().expand()
+	try {
+		useWebAppViewport().expand()
+	} catch(err: any) {
+		alert(err)
+	}
 })
 </script>
 

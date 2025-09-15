@@ -120,7 +120,7 @@ const active = ref(2)
 			@refresh="handleRefreshPage">
 
 			<div v-if="states.data">
-				<UCard variant="subtle" class="mt-[20px] text-white">
+				<UCard variant="subtle" class="mt-[20px] text-white bg-zinc-800 dark:bg-zinc-950">
 					<template #header>
 						<h2 v-if="states.data.have_workout">
 							Вы успешно купили марафон 💪🏽
@@ -154,7 +154,7 @@ const active = ref(2)
 
 					<template #footer>
 						<div class="l-grid">
-							<UButton @click="openCloseChat()" class="justify-center bg-stone-300">
+							<UButton @click="openCloseChat()" class="justify-center bg-stone-400 dark:bg-stone-300">
 								<span class="text-[14px] line-clamp-1">Открыть закрытый чат</span>
 							</UButton>
 							<UButton @click="openApp()" class="justify-center">

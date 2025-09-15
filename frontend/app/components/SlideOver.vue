@@ -28,7 +28,7 @@ const socials = [
 				</ul>
 				<div class="mt-auto">
 					<nuxt-link to="https://t.me/beachislove" target="_blank" external title="Тыкни" class="text-[12px] text-emerald-400">
-						Разработано с любовью ❤️ - <span class="text-white">@beachislove</span> 
+						Разработано с любовью ❤️ - <span class="text-black dark:text-white">@beachislove</span> 
 					</nuxt-link>
 				</div>
 			</div>
