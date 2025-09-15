@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { SlideOver } from '#components';
 
-// const overlay = useOverlay();
-// const slideover = overlay.create(SlideOver);
+const overlay = useOverlay();
+const slideover = overlay.create(SlideOver);
 
 const openSlideover = () => {
-	// slideover.open();
+	slideover.open();
 }
 </script>
 
