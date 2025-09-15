@@ -11,7 +11,7 @@ const states = reactive({
 
 const store = useStore();
 const drawerContent = useDrawer();
-const colorMode = useColorMode();
+// const colorMode = useColorMode();
 
 const openModalEmail = () => {
 	store.value.phone = null;
@@ -49,7 +49,7 @@ const getMarathon = async () => {
 
 onMounted(() => {
 	getMarathon();
-	colorMode.preference = 'dark';
+	// colorMode.preference = 'dark';
 });
 
 </script>
