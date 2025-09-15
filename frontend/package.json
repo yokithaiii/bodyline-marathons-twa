@@ -17,6 +17,5 @@
     "nuxt": "^3.16.0",
     "vue": "latest",
     "vue-router": "latest",
-    "vue-tg": "^0.8.0"
   }
 }

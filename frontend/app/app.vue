@@ -1,17 +1,11 @@
 <script setup lang="ts">
-import { useWebAppViewport } from 'vue-tg'
 
 const states = reactive({
 	errorText: null as null | string,
 });
 
 onBeforeMount(() => {
-	try {
-		useWebAppViewport().expand()
-	} catch(err: any) {
-		states.errorText = err
-		alert(err)
-	}
+	// useWebAppViewport().expand()
 })
 </script>
 
