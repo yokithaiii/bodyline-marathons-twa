@@ -1,5 +1,5 @@
 import Tailwind from '@tailwindcss/vite';
-import ru from 'proxima-vue/locale/ru';
+// import ru from 'proxima-vue/locale/ru';
 
 export default defineNuxtConfig({
 	// span mode start
@@ -43,16 +43,16 @@ export default defineNuxtConfig({
 		'@nuxt/ui', 
 		'@nuxt/eslint', 
 		'@nuxt/image',
-		'proxima-vue/nuxt',
+		// 'proxima-vue/nuxt',
 	],
-	proxima: {
-		injectStyles: false,
-		injectComponents: true,
-		injectComposables: true,
-		lang: 'ru',
-    	locales: { ru },
-		// other options
-	},
+	// proxima: {
+	// 	injectStyles: false,
+	// 	injectComponents: true,
+	// 	injectComposables: true,
+	// 	lang: 'ru',
+    // 	locales: { ru },
+	// 	// other options
+	// },
 	css: ['~/assets/css/main.css'],
 	vite: {
 		plugins: [Tailwind()],

@@ -128,11 +128,11 @@ function clearError() {
 
             <section class="l-buttons gap-1 mt-4">
 
-                <ProximaPhone
+                <!-- <ProximaPhone
                     class="l-label flex custom-phone-input"
                     label="Введите ваш номер телефона"
                     v-model="states.userData.phone"
-                />
+                /> -->
 
                 <label class="l-label flex">
                     <UButton class="justify-center" size="lg" @click="saveUserData" :loading="states.loading"
