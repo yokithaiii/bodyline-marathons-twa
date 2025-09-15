@@ -17,6 +17,7 @@ export default defineNuxtConfig({
 	future: {
 		compatibilityVersion: 4,
 	},
+	debug: true,
 	runtimeConfig: {
 		public: {
 			twaToken: process.env.TELEGRAM_BOT_TOKEN,
@@ -34,7 +35,6 @@ export default defineNuxtConfig({
 			],
 		},
 		rootAttrs: {
-			'vaul-drawer-wrapper': '',
 			class: 'bg-[var(--ui-bg)]',
 		},
 	},
