@@ -40,7 +40,7 @@ export default defineNuxtConfig({
 	},
 
 	modules: [
-		'@nuxt/ui', 
+		// '@nuxt/ui', 
 		'@nuxt/eslint', 
 		'@nuxt/image',
 		'proxima-vue/nuxt',
@@ -58,9 +58,9 @@ export default defineNuxtConfig({
 		plugins: [Tailwind()],
 	},
 
-	ui: {
-		theme: {
-			colors: ['primary', 'secondary', 'tertiary', 'info', 'success', 'warning', 'error'],
-		},
-	},
+	// ui: {
+	// 	theme: {
+	// 		colors: ['primary', 'secondary', 'tertiary', 'info', 'success', 'warning', 'error'],
+	// 	},
+	// },
 });
