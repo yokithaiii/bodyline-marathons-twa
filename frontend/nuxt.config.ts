@@ -12,8 +12,6 @@ export default defineNuxtConfig({
 	spaLoadingTemplate: 'spa-loading-template.html',
 
 	// app configs
-	devtools: { enabled: true },
-	debug: true,
 	compatibilityDate: '2024-11-01',
 	future: {
 		compatibilityVersion: 4,
@@ -34,15 +32,11 @@ export default defineNuxtConfig({
 				},
 			],
 		},
-		rootAttrs: {
-			class: 'bg-[var(--ui-bg)]',
-		},
 	},
 
 	modules: [
 		'@nuxt/ui', 
 		'@nuxt/eslint', 
-		'@nuxt/image',
 		// 'proxima-vue/nuxt',
 	],
 	// proxima: {
