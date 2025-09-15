@@ -17,7 +17,6 @@ export default defineNuxtConfig({
 	future: {
 		compatibilityVersion: 4,
 	},
-	debug: true,
 	runtimeConfig: {
 		public: {
 			twaToken: process.env.TELEGRAM_BOT_TOKEN,
@@ -40,27 +39,27 @@ export default defineNuxtConfig({
 	},
 
 	modules: [
-		// '@nuxt/ui', 
+		'@nuxt/ui', 
 		'@nuxt/eslint', 
 		'@nuxt/image',
-		// 'proxima-vue/nuxt',
+		'proxima-vue/nuxt',
 	],
-	// proxima: {
-	// 	injectStyles: false,
-	// 	injectComponents: true,
-	// 	injectComposables: true,
-	// 	lang: 'ru',
-    // 	locales: { ru },
-	// 	// other options
-	// },
+	proxima: {
+		injectStyles: false,
+		injectComponents: true,
+		injectComposables: true,
+		lang: 'ru',
+    	locales: { ru },
+		// other options
+	},
 	css: ['~/assets/css/main.css'],
 	vite: {
 		plugins: [Tailwind()],
 	},
 
-	// ui: {
-	// 	theme: {
-	// 		colors: ['primary', 'secondary', 'tertiary', 'info', 'success', 'warning', 'error'],
-	// 	},
-	// },
+	ui: {
+		theme: {
+			colors: ['primary', 'secondary', 'tertiary', 'info', 'success', 'warning', 'error'],
+		},
+	},
 });
