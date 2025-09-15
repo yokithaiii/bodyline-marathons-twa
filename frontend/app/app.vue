@@ -20,7 +20,7 @@ onBeforeMount(() => {
 		Error: {{ states.errorText }}
 	</div>
 	<UApp v-else>
-		<div class="bg-[var(--ui-bg)]" vaul-drawer-wrapper>
+		<div class="bg-[var(--ui-bg)]">
 			<NuxtLayout>
 				<NuxtPage />
 			</NuxtLayout>

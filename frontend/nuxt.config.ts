@@ -13,6 +13,7 @@ export default defineNuxtConfig({
 
 	// app configs
 	devtools: { enabled: true },
+	debug: true,
 	compatibilityDate: '2024-11-01',
 	future: {
 		compatibilityVersion: 4,
