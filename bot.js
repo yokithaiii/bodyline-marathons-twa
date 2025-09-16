@@ -11,9 +11,13 @@ bot.use(session());
 bot.use(stage.middleware());
 
 bot.command('start', ctx => {
+
+    const timestamp = Date.now();
+    const webAppUrl = `https://marathonsbot.bodylineapp.com?t=${timestamp}`;
+
     const openTMAButton = {
         text: 'Открыть мини-приложение 🚀',
-        web_app: { url: 'https://marathonsbot.bodylineapp.com/' }
+        web_app: { url: webAppUrl }
     };
 
     ctx.reply(START_MESSAGE(ctx.from.first_name), {
